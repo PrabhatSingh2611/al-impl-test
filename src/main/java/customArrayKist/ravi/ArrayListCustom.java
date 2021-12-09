@@ -188,10 +188,9 @@ public class ArrayListCustom<E> implements List<E> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        Iterator<?> itr = c.iterator();
-        for (int i = 0; i < size; i++) {
-            while (itr.hasNext()) {
-                Object cElement = itr.next();
+        int tmp = size;
+        for (int i = 0; i < tmp; i++) {
+            for (Object cElement : c) {
                 if (cElement == listData[i]) {
                     listData[i] = null;
                     size--;
@@ -206,6 +205,13 @@ public class ArrayListCustom<E> implements List<E> {
      * This will remove the null data from between the list
      */
     private void nullRemover() {
+        int numberOfElement = 0;
+        for (Object o : listData) {
+            if (o == null) {
+                continue;
+            }
+            numberOfElement++;
+        }
         Object[] tmp = new Object[listData.length];
         for (int i = 0, j = 0; i < size; i++) {
             if (listData[i] == null) {
@@ -227,8 +233,8 @@ public class ArrayListCustom<E> implements List<E> {
      */
     @Override
     public void clear() {
-        System.out.print("Are you Sure to clear the list press (Y/N)   :   ");
-        String ch = sc.next();
+//        System.out.print("Are you Sure to clear the list press (Y/N)   :   ");
+        String ch = "y";
         if (ch.toLowerCase(Locale.ROOT).equals("y")) {
             for (int i = 0; i < size; i++) {
                 listData[i] = null;
@@ -342,7 +348,12 @@ public class ArrayListCustom<E> implements List<E> {
 
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
-        return null;
+        List tmp = new ArrayList<>();
+        for (int i = fromIndex; i <= toIndex; i++) {
+            tmp.add(listData[i]);
+        }
+
+        return tmp;
     }
 
     public void display() {
